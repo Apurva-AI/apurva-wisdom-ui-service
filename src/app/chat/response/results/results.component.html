@@ -1,0 +1,568 @@
+<div *ngIf="resOrgId.length !== 0 && viewResults" class="results-wrapper">
+  <div class="results-wrapper" style="margin-bottom: 1rem">
+    <div>
+      <div
+        class="otherRes"
+        [ngStyle]="references ? { 'border-radius': '1rem 1rem 0rem 0rem' } : {}"
+        style="display: flex; cursor: pointer"
+        (click)="toggleRef()"
+      >
+        <h3 class="sidenav-title header-font-mobile">
+          <span translate>Primary Sources</span> ({{ resResultArrAnswerRef.length }})
+        </h3>
+        <div class="show flex items-center">
+          <div class="arrow">
+            <img
+              src="../../../../assets/DownArrow.svg"
+              class="icon-light"
+              style="height: 2rem"
+              alt=""
+              [class.rotate]="references"
+            />
+          </div>
+        </div>
+      </div>
+      <div *ngIf="references" class="channelSection channelSectionFiltered resWrapperGrid no-scrollbar">
+        <div *ngIf="resOrgId.length !== 0" class="sidenav-wrapper">
+          <nav class="sidenav-content">
+            <ul class="sidenav-list">
+              <li *ngFor="let org of resOrgId; let i = index" class="sidenav-item flex">
+                <ng-container *ngIf="countMatchingItemsAns(org.channel) > 0">
+                  <a
+                    class="sidenav-link"
+                    (click)="selectChannelAnsRef(org.channel)"
+                    [ngClass]="{ 'selected-channel-border': selectedChannelAnswerRef === org.channel }"
+                    [ngStyle]="{
+                      'border-color': selectedChannelAnswerRef === org.channel ? org.color : 'transparent',
+                      'background-color':
+                        selectedChannelAnswerRef === org.channel ? getRGBAColor(org.color, 0.2) : 'transparent'
+                    }"
+                  >
+                    <span *ngIf="!org.translated_channel" class="sidenav-text"
+                      >{{ org.channel }} ({{ countMatchingItemsAns(org.channel) }})</span
+                    >
+                    <span *ngIf="org.translated_channel" class="sidenav-text"
+                      >{{ org.translated_channel }} ({{ countMatchingItemsAns(org.channel) }})</span
+                    >
+                  </a>
+                </ng-container>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div style="width: 100%">
+          <div
+            class="flex items-center check-result-list resWidth"
+            style="margin-left: 2rem; margin-bottom: 1rem"
+            translate
+          >
+            <div class="switch-input" style="display: flex; margin-right: 1rem">
+              <input
+                type="checkbox"
+                role="switch"
+                [id]="uuidArr + 'selectAllAnsRef'"
+                [checked]="areAllItemsSelectedForTagAnsRef(selectedChannelAnswerRef)"
+                (change)="updateIsUsedEnhanceAnsRef(selectedChannelAnswerRef, $event)"
+              />
+              <label [for]="uuidArr + 'selectAllAnsRef'"></label>
+            </div>
+            <ng-container translate>Select All</ng-container>
+          </div>
+          <div class="resWrapper">
+            <div *ngFor="let res of resResultArrAnswerRef; let i = index">
+              <div *ngIf="res.tags[0] == selectedChannelAnswerRef">
+                <div class="flex items-center check-result-list resWidth">
+                  <div class="form-group inputDiv"></div>
+                  <div class="result-list" [style.border-color]="getColorForTag(res.tags[0])">
+                    <div translate><ng-container translate>Reference</ng-container> {{ res.sourceCount }}</div>
+                    <ng-container *ngIf="res.format === 'file' || res.format === 'url'; else audioButton">
+                      <div class="flex items-center result-desc">
+                        <div class="form-group inputDiv">
+                          <input
+                            type="checkbox"
+                            [id]="res._id + '-' + i"
+                            [checked]="res.isUsedEnhance"
+                            (change)="toggleResultSelectionAnsRef(res)"
+                          />
+                          <label [for]="res._id + '-' + i"></label>
+                        </div>
+                        <div *ngIf="res.format === 'file'" class="icon">
+                          <img src="../../../../assets/DocIcon.svg" class="icon-light" alt="" />
+                        </div>
+                        <div *ngIf="res.format === 'url'" class="icon" style="cursor: pointer">
+                          <a [href]="res.public_url" target="_blank">
+                            <img
+                              src="../../../../assets/Vector_open.svg"
+                              style="margin-left: 0.5rem"
+                              class="icon-dark"
+                              alt=""
+                            />
+                          </a>
+                        </div>
+                        <a class="link" [href]="res.public_url" target="_blank">{{
+                          getFirstTwentyWords(res.text[0])
+                        }}</a>
+                      </div>
+
+                      <div class="show flex items-center">
+                        <div class="desc-small green" style="cursor: pointer" (click)="open(content, res)" translate>
+                          Show
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="res.source_url"
+                        class="items-center"
+                        style="top: -24px; position: relative; margin-left: 92px; margin-bottom: -25px"
+                      >
+                        <a class="srclink green" [href]="res.source_url" target="_blank" translate>Source URL</a>
+                      </div>
+                    </ng-container>
+                    <ng-template #audioButton>
+                      <ng-container *ngIf="res.format === 'audio'; else videoButton">
+                        <div class="flex items-center result-desc">
+                          <div class="form-group inputDiv">
+                            <input
+                              type="checkbox"
+                              [id]="res._id + '-' + i"
+                              [checked]="res.isUsedEnhance"
+                              (change)="toggleResultSelectionAnsRef(res)"
+                            />
+                            <label [for]="res._id + '-' + i"></label>
+                          </div>
+                          <!-- <div class="media-wrapper">
+                            <audio controls controlsList="nodownload" translate (contextmenu)="disableRightClick($event)">
+                              <source [src]="res.public_url" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </div> -->
+                          <div (click)="open(content, res)" style="margin-right: 1rem">
+                            <img
+                              style="width: 25px"
+                              src="../../../../assets/music-note-svgrepo-com.svg"
+                              class="icon-dark"
+                              alt=""
+                            />
+                          </div>
+                          <div class="desc-small">{{ getFirstTwentyWords(res.text[0]) }}</div>
+                        </div>
+                        <div class="show flex items-center">
+                          <div class="desc-small green" style="cursor: pointer" (click)="open(content, res)" translate>
+                            Show
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="res.source_url"
+                          class="items-center"
+                          style="top: -24px; position: relative; margin-left: 92px; margin-bottom: -25px"
+                        >
+                          <a class="srclink green" [href]="res.source_url" target="_blank">Source URL</a>
+                        </div>
+                      </ng-container>
+                    </ng-template>
+                    <ng-template #videoButton>
+                      <div class="flex items-center result-desc">
+                        <div class="form-group inputDiv">
+                          <input
+                            type="checkbox"
+                            [id]="res._id + '-' + i"
+                            [checked]="res.isUsedEnhance"
+                            (change)="toggleResultSelectionAnsRef(res)"
+                          />
+                          <label [for]="res._id + '-' + i"></label>
+                        </div>
+                        <div (click)="open(content, res)" style="margin-right: 1rem">
+                          <img
+                            style="width: 25px"
+                            src="../../../../assets/videos-svgrepo-com.svg"
+                            class="icon-dark"
+                            alt=""
+                          />
+                        </div>
+                        <div class="desc-small">{{ getFirstTwentyWords(res.text[0]) }}</div>
+                      </div>
+                      <div class="show flex items-center">
+                        <div class="desc-small green" style="cursor: pointer" (click)="open(content, res)" translate>
+                          Show
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="res.source_url"
+                        class="items-center"
+                        style="top: -24px; position: relative; margin-left: 92px; margin-bottom: -25px"
+                      >
+                        <a class="srclink green" [href]="res.source_url" target="_blank">Source URL</a>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <!-- </ng-container> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="results-wrapper">
+    <div *ngIf="resResultArrFiltered.length > 0">
+      <div
+        class="otherRes"
+        [ngStyle]="otherResources ? { 'border-radius': '1rem 1rem 0rem 0rem' } : {}"
+        style="display: flex; cursor: pointer"
+        (click)="toggleRes()"
+      >
+        <h3 class="sidenav-title header-font-mobile">
+          <span translate>Other Sources</span> ({{ resResultArrFiltered.length }})
+        </h3>
+        <div class="show flex items-center">
+          <div class="arrow">
+            <img
+              src="../../../../assets/DownArrow.svg"
+              class="icon-light"
+              style="height: 2rem"
+              alt=""
+              [class.rotate]="otherResources"
+            />
+          </div>
+        </div>
+      </div>
+      <div *ngIf="otherResources" class="channelSection channelSectionFiltered resWrapperGrid no-scrollbar">
+        <div *ngIf="resOrgId.length !== 0" class="sidenav-wrapper">
+          <nav class="sidenav-content">
+            <ul class="sidenav-list">
+              <li *ngFor="let org of resOrgId; let i = index" class="sidenav-item flex">
+                <ng-container *ngIf="countMatchingItemsFilter(org.channel) > 0">
+                  <a
+                    class="sidenav-link"
+                    (click)="selectChannelFiltered(org.channel)"
+                    [ngClass]="{ 'selected-channel-border': selectedChannelFiltered === org.channel }"
+                    [ngStyle]="{
+                      'border-color': selectedChannelFiltered === org.channel ? org.color : 'transparent',
+                      'background-color':
+                        selectedChannelFiltered === org.channel ? getRGBAColor(org.color, 0.2) : 'transparent'
+                    }"
+                  >
+                    <span *ngIf="!org.translated_channel" class="sidenav-text"
+                      >{{ org.channel }} ({{ countMatchingItemsFilter(org.channel) }})</span
+                    >
+                    <span *ngIf="org.translated_channel" class="sidenav-text"
+                      >{{ org.translated_channel }} ({{ countMatchingItemsFilter(org.channel) }})</span
+                    >
+                  </a>
+                </ng-container>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div style="width: 100%">
+          <div
+            class="flex items-center check-result-list resWidth"
+            style="margin-left: 2rem; margin-bottom: 1rem"
+            translate
+          >
+            <div class="switch-input" style="display: flex; margin-right: 1rem">
+              <input
+                type="checkbox"
+                role="switch"
+                [id]="uuidArr + 'selectAllFiltered'"
+                [checked]="areAllItemsSelectedForTagFiltered(selectedChannelFiltered)"
+                (change)="updateIsUsedEnhanceFiltered(selectedChannelFiltered, $event)"
+              />
+              <label [for]="uuidArr + 'selectAllFiltered'"></label>
+            </div>
+            <ng-container translate>Select All</ng-container>
+          </div>
+          <div class="resWrapper">
+            <div *ngFor="let res of resResultArrFiltered; let i = index">
+              <div *ngIf="res.tags[0] == selectedChannelFiltered">
+                <div class="flex items-center check-result-list resWidth">
+                  <div class="form-group inputDiv"></div>
+                  <div class="result-list" [style.border-color]="getColorForTag(res.tags[0])">
+                    <ng-container *ngIf="res.format === 'file' || res.format === 'url'; else audioButton">
+                      <div class="flex items-center result-desc">
+                        <div class="form-group inputDiv">
+                          <input
+                            type="checkbox"
+                            [id]="res._id + '-' + i"
+                            [checked]="res.isUsedEnhance"
+                            (change)="toggleResultSelectionFiltered(res)"
+                          />
+                          <label [for]="res._id + '-' + i"></label>
+                        </div>
+                        <div *ngIf="res.format === 'file'" class="icon">
+                          <img src="../../../../assets/DocIcon.svg" class="icon-light" alt="" />
+                        </div>
+                        <div *ngIf="res.format === 'url'" class="icon" style="cursor: pointer">
+                          <a [href]="res.public_url" target="_blank">
+                            <img
+                              src="../../../../assets/Vector_open.svg"
+                              style="margin-left: 0.5rem"
+                              class="icon-dark"
+                              alt=""
+                            />
+                          </a>
+                        </div>
+                        <a class="link" [href]="res.public_url" target="_blank">{{
+                          getFirstTwentyWords(res.text[0])
+                        }}</a>
+                      </div>
+                      <div class="show flex items-center">
+                        <div class="desc-small green" style="cursor: pointer" (click)="open(content, res)" translate>
+                          Show
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="res.source_url"
+                        class="items-center"
+                        style="top: -24px; position: relative; margin-left: 92px; margin-bottom: -25px"
+                      >
+                        <a class="srclink green" [href]="res.source_url" target="_blank" translate>Source URL</a>
+                      </div>
+                    </ng-container>
+                    <ng-template #audioButton>
+                      <ng-container *ngIf="res.format === 'audio'; else videoButton">
+                        <div class="flex items-center result-desc">
+                          <div class="form-group inputDiv">
+                            <input
+                              type="checkbox"
+                              [id]="res._id + '-' + i"
+                              [checked]="res.isUsedEnhance"
+                              (change)="toggleResultSelectionFiltered(res)"
+                            />
+                            <label [for]="res._id + '-' + i"></label>
+                          </div>
+                          <!-- <div class="media-wrapper">
+                            <audio controls controlsList="nodownload" translate (contextmenu)="disableRightClick($event)">
+                              <source [src]="res.public_url" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </div> -->
+                          <div (click)="open(content, res)" style="margin-right: 1rem">
+                            <img
+                              style="width: 25px"
+                              src="../../../../assets/music-note-svgrepo-com.svg"
+                              class="icon-dark"
+                              alt=""
+                            />
+                          </div>
+                          <div class="desc-small">{{ getFirstTwentyWords(res.text[0]) }}</div>
+                        </div>
+                        <div class="show flex items-center">
+                          <div class="desc-small green" style="cursor: pointer" (click)="open(content, res)" translate>
+                            Show
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="res.source_url"
+                          class="items-center"
+                          style="top: -24px; position: relative; margin-left: 92px; margin-bottom: -25px"
+                        >
+                          <a class="srclink green" [href]="res.source_url" target="_blank">Source URL</a>
+                        </div>
+                      </ng-container>
+                    </ng-template>
+                    <ng-template #videoButton>
+                      <div class="flex items-center result-desc">
+                        <div class="form-group inputDiv">
+                          <input
+                            type="checkbox"
+                            [id]="res._id + '-' + i"
+                            [checked]="res.isUsedEnhance"
+                            (change)="toggleResultSelectionFiltered(res)"
+                          />
+                          <label [for]="res._id + '-' + i"></label>
+                        </div>
+                        <div (click)="open(content, res)" style="margin-right: 1rem">
+                          <img
+                            style="width: 25px"
+                            src="../../../../assets/videos-svgrepo-com.svg"
+                            class="icon-dark"
+                            alt=""
+                          />
+                        </div>
+                        <div class="desc-small">{{ getFirstTwentyWords(res.text[0]) }}</div>
+                      </div>
+                      <div class="show flex items-center">
+                        <div class="desc-small green" style="cursor: pointer" (click)="open(content, res)" translate>
+                          Show
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="res.source_url"
+                        class="items-center"
+                        style="top: -24px; position: relative; margin-left: 92px; margin-bottom: -25px"
+                      >
+                        <a class="srclink green" [href]="res.source_url" target="_blank">Source URL</a>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <!-- </ng-container> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="enhance-wrapper greenText" style="margin-top: 2rem">
+      <div
+        *ngIf="resResultArr.length !== 0"
+        class="flex items-center"
+        (click)="enhanceToggle()"
+        style="cursor: pointer"
+      >
+        <div class="icon">
+          <img src="../../../../assets/Enhance.svg" alt="" />
+        </div>
+        <div class="header-font-mobile">Strategic Analysis (From {{ this.checkedIDs.length }} resources)</div>
+      </div>
+    </div> -->
+  </div>
+
+  <ng-template #content let-modal>
+    <div class="modalDiv">
+      <div style="display: flex; align-items: center; justify-content: space-between">
+        <h2 *ngIf="resModal[0].sourceCount" translate>
+          <ng-container translate>Reference</ng-container> {{ resModal[0].sourceCount }}
+        </h2>
+        <h2 *ngIf="!resModal[0].sourceCount" translate>Resource</h2>
+        <div (click)="modal.dismiss('close button click')" style="cursor: pointer">
+          <img src="../../../../assets/modalCross.svg" alt="" class="icon-dark" />
+        </div>
+      </div>
+      <div
+        *ngFor="let res of resModal; let i = index"
+        class="flex items-center check-result-list"
+        style="flex-direction: column"
+      >
+        <div class="result-list" [style.border-color]="getColorForTag(res.tags[0])" style="padding: 1rem">
+          <div class="flex items-center result-header" style="margin-bottom: 1rem; gap: 1rem">
+            <div class="icon">
+              <img src="../../../../assets/EchoIndiaLogo.svg" class="icon-dark" alt="" />
+            </div>
+            <div class="desc">{{ res.tags.join(',') }}</div>
+          </div>
+          <ng-container *ngIf="res.format === 'file' || res.format === 'url'; else audioButton">
+            <div class="flex items-center result-desc" style="margin-bottom: 1rem; gap: 1rem">
+              <div *ngIf="res.format === 'file'" class="icon">
+                <img src="../../../../assets/DocIcon.svg" class="icon-light" alt="" />
+              </div>
+              <div *ngIf="res.format === 'url'" class="icon" style="cursor: pointer">
+                <a [href]="res.public_url" target="_blank">
+                  <img src="../../../../assets/Vector_open.svg" style="margin-left: 0.5rem" class="icon-dark" alt="" />
+                </a>
+              </div>
+              <a class="link green" [href]="res.public_url" target="_blank">
+                {{ getFirstTwentyWords(res.text[0]) }}</a
+              >
+            </div>
+            <div *ngIf="res.source_url" class="flex items-center result-desc" style="gap: 1rem">
+              <img src="../../../../assets/Vector_open.svg" style="margin-left: 0.5rem" class="icon-dark" alt="" />
+              <a class="srclink green" [href]="res.source_url" target="_blank" translate>Source URL</a>
+            </div>
+            <div class="show-result">
+              <div class="desc-small" style="border: 1px solid; border-radius: 10px; padding: 1rem; margin-top: 1rem">
+                <ng-container *ngFor="let text of getSpanHighlightedText(res)">
+                  <div class="box">
+                    <div class="text-content" [innerHTML]="text"></div>
+                    <div class="transparent_gradient"></div>
+                  </div>
+                </ng-container>
+              </div>
+              <div
+                class="desc-small translate-btn-div"
+                *ngIf="language !== 'en' && !res.translatedText"
+                style="margin-top: 1rem"
+              >
+                <button class="translate-btn" (click)="translateResultsText(res)">Translate</button>
+              </div>
+              <div
+                class="desc-small"
+                *ngIf="res.translatedText"
+                style="border: 1px solid; border-radius: 10px; padding: 1rem; margin-top: 1rem"
+              >
+                <p [innerHTML]="res.translatedText"></p>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #audioButton>
+            <ng-container *ngIf="res.format === 'audio'; else videoButton">
+              <div class="flex items-center result-desc">
+                <div class="media-wrapper">
+                  <audio controls translate>
+                    <source [src]="res.public_url" />
+                    Your browser does not support the audio element.
+                  </audio>
+                </div>
+                <!-- <div class="desc-small" style="margin-left: 1rem;">{{ getFirstTwentyWords(res.text) }}</div> -->
+              </div>
+              <div *ngIf="res.source_url" class="flex items-center result-desc" style="gap: 1rem">
+                <img src="../../../../assets/Vector_open.svg" style="margin-left: 0.5rem" class="icon-dark" alt="" />
+                <a class="srclink green" [href]="res.source_url" target="_blank" translate>Source URL</a>
+              </div>
+              <div class="show-result">
+                <div class="desc-small" style="border: 1px solid; border-radius: 10px; padding: 1rem; margin-top: 1rem">
+                  <ng-container *ngFor="let text of getSpanHighlightedText(res)">
+                    <div class="box">
+                      <div class="text-content" [innerHTML]="text"></div>
+                      <div class="transparent_gradient"></div>
+                    </div>
+                  </ng-container>
+                </div>
+                <div
+                  class="desc-small translate-btn-div"
+                  *ngIf="language !== 'en' && !res.translatedText"
+                  style="margin-top: 1rem"
+                >
+                  <button class="translate-btn" (click)="translateResultsText(res)">Translate</button>
+                </div>
+                <div
+                  class="desc-small"
+                  *ngIf="res.translatedText"
+                  style="border: 1px solid; border-radius: 10px; padding: 1rem; margin-top: 1rem"
+                >
+                  <p [innerHTML]="res.translatedText"></p>
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+          <ng-template #videoButton>
+            <div class="flex items-center result-desc">
+              <div class="media-wrapper">
+                <video width="250" height="200" frameborder="0" allowfullscreen [src]="res.public_url" controls></video>
+              </div>
+            </div>
+            <div *ngIf="res.source_url" class="flex items-center result-desc" style="gap: 1rem">
+              <img src="../../../../assets/Vector_open.svg" style="margin-left: 0.5rem" class="icon-dark" alt="" />
+              <a class="srclink green" [href]="res.source_url" target="_blank" translate>Source URL</a>
+            </div>
+            <div class="show-result">
+              <div class="desc-small" style="border: 1px solid; border-radius: 10px; padding: 1rem; margin-top: 1rem">
+                <ng-container *ngFor="let text of getSpanHighlightedText(res)">
+                  <div class="box">
+                    <div class="text-content" [innerHTML]="text"></div>
+                    <div class="transparent_gradient"></div>
+                  </div>
+                </ng-container>
+              </div>
+              <div
+                class="desc-small translate-btn-div"
+                *ngIf="language !== 'en' && !res.translatedText"
+                style="margin-top: 1rem"
+              >
+                <button class="translate-btn" (click)="translateResultsText(res)">Translate</button>
+              </div>
+              <div
+                class="desc-small"
+                *ngIf="res.translatedText"
+                style="border: 1px solid; border-radius: 10px; padding: 1rem; margin-top: 1rem"
+              >
+                <p [innerHTML]="res.translatedText"></p>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,55 @@
+<div *ngIf="resLength == 0" class="title text-center mobileView mobileTitle" translate>
+  <span class="text-green" translate>Get Started with</span> Apurva.ai
+</div>
+<div class="footer-wrapper">
+  <!-- class="footer-wrapper" (keyup.enter)="send(message.value, 'USER'); message.value = ''; resetFooter()" -->
+  <div class="input-wrapper">
+    <textarea
+      #message
+      maxlength="600"
+      autocomplete="off"
+      (keydown)="handleKeyDown($event)"
+      [placeholder]="this.placeholderText | translate"
+      [disabled]="isInputDisabled"
+      [(ngModel)]="inputValue"
+      (focus)="enableSuggestions()"
+      (ngModelChange)="onInputChange()"
+      rows="1"
+      (input)="adjustTextareaHeight($event)"
+      style="max-height: 100px; overflow: auto"
+      class="border-2p inputFocus"
+    ></textarea>
+  </div>
+  <div class="custom-element" [ngClass]="{ 'input-disabled': isInputDisabled, 'input-enabled': !isInputDisabled }">
+    <span class="input-group-btn">
+      <button class="btn btn-sm" *ngIf="recording && !started; else mic" (click)="stopRecording()">
+        <img src="../../../assets/MICG.svg" alt="" class="icon-green" />
+      </button>
+      <ng-template #mic>
+        <button
+          class="btn btn-sm mic"
+          id="submit"
+          (click)="initiateRecording()"
+          *ngIf="!started"
+          [disabled]="isInputDisabled"
+        >
+          <img src="../../../assets/MICW.svg" alt="" class="icon-dark" />
+        </button>
+      </ng-template>
+    </span>
+    <ng-container *ngIf="!isInputDisabled">
+      <button class="btn btn-sm send sendDis" id="btn-chat" *ngIf="!sendDisabled">
+        <img src="../../../assets/Send.svg" alt="" />
+      </button>
+      <button class="btn btn-sm send" id="btn-chat" (click)="send(message.value, 'USER')" *ngIf="sendDisabled">
+        <img src="../../../assets/sendG.svg" alt="" class="icon-green" />
+      </button>
+    </ng-container>
+  </div>
+  <app-suggestion
+    (quesEvent)="changeQues($event)"
+    [sendDisabled]="suggestionsEnabled"
+    [token]="suggestedToken"
+    #suggestedRef
+  ></app-suggestion>
+</div>

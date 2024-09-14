@@ -1,0 +1,251 @@
+.footer-wrapper {
+  // max-width: 638px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-left: 100px;
+  padding-top: 10px;
+  position: relative;
+  // margin-bottom: 20px;
+  width: 70vw;
+
+  .input-wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 675px;
+
+    textarea {
+      flex: 1;
+      min-height: 60px;
+      max-height: 150px;
+      font-size: 16px;
+      background-color: var(--primary-dark-bg);
+      border-radius: 20px;
+      padding: 16px 40px 16px 16px;
+      border: 0;
+      width: 100%;
+      color: var(--primary);
+      font-weight: 300;
+      resize: none;
+      overflow-y: hidden;
+      box-sizing: border-box;
+
+      overflow-y: auto;
+      scrollbar-width: thin;
+      /* For Firefox */
+      scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+      /* For Firefox */
+
+      /* Webkit browsers like Chrome, Safari */
+      &::-webkit-scrollbar {
+        width: 6px;
+        /* Very narrow scrollbar */
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(155, 155, 155, 0.5);
+        border-radius: 3px;
+      }
+
+      &::-webkit-scrollbar-button {
+        display: none;
+      }
+
+      &:focus {
+        outline: none;
+        border: 2px solid var(--active) !important;
+      }
+    }
+
+    .mic {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+    }
+  }
+}
+
+// .input-wrapper {
+//   position: relative;
+//   flex: 1;
+//   max-width: 535px;
+//   input {
+//     flex: 1;
+//     height: 60px;
+//     font-size: 16px;
+//     background-color: var(--primary-dark-bg);
+//     border-radius: 40px;
+//     text-indent: 16px;
+//     border: 0;
+//     width: 100%;
+//     color: var(--primary);
+//     font-weight: 300;
+//     &:focus {
+//       outline: none;
+//     }
+//   }
+//   .mic {
+//     position: absolute;
+//     right: 16px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//   }
+// }
+
+.mic:disabled {
+  border: none;
+}
+
+.send {
+  border: none;
+}
+
+.sendDis {
+  cursor: no-drop;
+}
+
+.mobileTitle {
+  // position: fixed;
+  // bottom: 11%;
+  // right: 13%;
+  // min-width: 20rem;
+  position: fixed;
+  left: 50%;
+  bottom: 15%;
+  transform: translateX(-50%);
+  min-width: 20rem;
+  max-width: 90vw;
+}
+
+.custom-element {
+  right: 3rem;
+  position: relative;
+  // width: 15%;
+  // display: flex;
+  // align-items: center;
+}
+
+.input-enabled {
+  top: -1rem;
+}
+
+.input-disabled {
+  top: -1.3rem;
+}
+
+@media (max-width: 1320px) and (min-width: 1190px) {
+  .footer-wrapper {
+    width: 56vw;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 770px) {
+  .footer-wrapper {
+    width: 56vw;
+  }
+}
+
+@media (min-width: 770px) and (max-width: 1024px) {
+  .footer-wrapper {
+    padding-top: 20px;
+  }
+
+  .footer-wrapper {
+    width: 56vw;
+  }
+}
+
+// @media (min-width: 425px) and (max-width: 768px) {
+//   .footer-wrapper {
+//     width: 70vh;
+//   }
+// }
+
+@media (min-width: 753px) {
+  .mobileView {
+    display: none;
+  }
+}
+
+@media (min-width: 753px) and (max-width: 932px) {
+  .footer-wrapper {
+    width: 75vw;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 424px) {
+  .footer-wrapper {
+    width: 95vw;
+    margin-left: 40px;
+  }
+}
+
+@media (min-width: 424px) and (max-width: 653px) {
+  .footer-wrapper {
+    width: 95vw;
+    margin-left: 40px;
+  }
+}
+
+@media (min-width: 653px) and (max-width: 753px) {
+  .footer-wrapper {
+    width: 95vw;
+    margin-left: 40px;
+  }
+}
+
+@media (max-width: 753px) {
+  textarea {
+    max-height: 75px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-wrapper {
+    // position: fixed;
+    // bottom: 0;
+    // left: 0;
+    // right: 0;
+    // width: 100%;
+    // margin-left: 0;
+    // padding: 10px;
+    // background-color: transparent;
+    // z-index: 1000;
+    // margin-left: 1.5rem;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin-left: 0;
+    padding: 10px;
+    background-color: var(--secondary-dark-bg);
+    z-index: 1000;
+    width: auto;
+    /* margin-left: 1.5rem; */
+    margin-right: calc(var(--bs-gutter-x) * 0.5);
+    margin-left: calc(var(--bs-gutter-x) * 0.5);
+    border-radius: 0rem 0rem 1rem 1rem;
+    margin-bottom: 1rem;
+
+    .input-wrapper {
+      max-width: 100%;
+    }
+
+    textarea {
+      border-radius: 20px;
+      max-height: 100px;
+    }
+  }
+
+  .custom-element {
+    width: 15%;
+    display: flex;
+    align-items: center;
+  }
+}

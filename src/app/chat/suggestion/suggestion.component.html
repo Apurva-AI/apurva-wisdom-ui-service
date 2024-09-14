@@ -1,0 +1,9 @@
+<div *ngIf="sendDisabled && suggestedQuestions.length !== 0" class="suggestion-wrapper" no-scrollbar>
+  <div class="suggestion-list">
+    <div class="sub-title" translate>Apurva Suggested</div>
+    <ul *ngFor="let ques of suggestedQuestions" style="display: flex">
+      <img style="margin-right: 5px" src="../../../assets/point.svg" alt="" class="icon-green" />
+      <li (click)="sendQues(ques)">{{ ques }}</li>
+    </ul>
+  </div>
+</div>

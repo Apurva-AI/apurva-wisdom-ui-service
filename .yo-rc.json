@@ -1,0 +1,31 @@
+{
+  "generator-ngx-rocket": {
+    "version": "11.0.0",
+    "props": {
+      "location": "path",
+      "strict": true,
+      "skipInstall": false,
+      "skipQuickstart": false,
+      "initGit": true,
+      "usePrefix": true,
+      "appName": "Apurva Discovery",
+      "target": ["web", "cordova"],
+      "mobile": ["ios", "android"],
+      "ui": "bootstrap",
+      "features": ["pwa", "auth", "lazy"],
+      "languages": ["de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "pt-BR", "zh-CN"],
+      "tools": ["prettier"],
+      "utility": ["lodash", "moment"],
+      "deploy": "none",
+      "projectName": "apurva-discovery",
+      "packageManager": "npm",
+      "desktop": [],
+      "pwa": true,
+      "auth": true,
+      "lazy": true,
+      "e2e": false,
+      "cypress": false,
+      "angulartics": false
+    }
+  }
+}

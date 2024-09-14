@@ -1,0 +1,102 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <div class="nav-hamburger" (click)="toggleSideNavMenu()" [ngClass]="{ active: isSideNav }">
+        <!-- <div class="line line1" [ngClass]="{ 'rotate45': isSideNav }"></div>
+        <div class="line line2" [ngClass]="{ 'opacity': isSideNav }"></div>
+        <div [ngClass]="{ 'active': isSideNav }" class="line" [ngClass]="{ 'rotate-minus45': isSideNav, 'line3': !isSideNav  }"></div> -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path d="M9 3V21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <a class="navbar-brand" href="https://apurva.ai" translate>Apurva<span class="active-var">.</span>ai</a>
+      <button
+        class="navbar-toggler icon-dark"
+        type="button"
+        aria-controls="navbar-menu"
+        aria-label="Toggle navigation"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="!menuHidden"
+      >
+        <span class="navbar-toggler-icon icon-dark"></span>
+      </button>
+      <div id="navbar-menu" class="collapse navbar-collapse float-xs-none" [ngbCollapse]="menuHidden">
+        <div class="navbar-nav me-auto">
+          <!-- <a class="nav-item nav-link active-nav" routerLink="/home" routerLinkActive="active">
+            <span translate>Home</span>
+          </a>
+          <a class="nav-item nav-link" routerLink="/about" routerLinkActive="active">
+            <span translate>About</span>
+          </a> -->
+        </div>
+        <div class="navbar-nav ml-auto sideContainer">
+          <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+              <input type="checkbox" id="checkbox" [checked]="isDarkTheme" (change)="toggleTheme()" />
+              <div class="slider round">
+                <img src="../../../assets/light-theme.svg" class="icon light-icon icon-dark" alt="Light theme" />
+                <img src="../../../assets/dark theme.svg" class="icon dark-icon" alt="Dark theme" />
+              </div>
+            </label>
+          </div>
+          <app-language-selector [inNavbar]="true"></app-language-selector>
+          <div class="nav-item" ngbDropdown display="dynamic">
+            <a id="user-dropdown" class="nav-link" ngbDropdownToggle>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon-dark"
+              >
+                <path
+                  d="M12.1198 12.78C12.0401 12.77 11.9595 12.77 11.8798 12.78C11.0317 12.7514 10.228 12.3944 9.63831 11.7842C9.04866 11.174 8.71929 10.3585 8.71977 9.50999C8.71977 7.69999 10.1798 6.22999 11.9998 6.22999C12.8592 6.22849 13.6848 6.5648 14.2986 7.16639C14.9124 7.76798 15.2652 8.58668 15.2809 9.44597C15.2966 10.3053 14.9741 11.1363 14.3827 11.76C13.7914 12.3837 12.9787 12.75 12.1198 12.78ZM18.7398 19.38C16.902 21.0691 14.4958 22.0044 11.9998 22C9.39977 22 7.03977 21.01 5.25977 19.38C5.35977 18.44 5.95977 17.52 7.02977 16.8C9.76977 14.98 14.2498 14.98 16.9698 16.8C18.0398 17.52 18.6398 18.44 18.7398 19.38Z"
+                  stroke="#D9D9D9"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22Z"
+                  stroke="#D9D9D9"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <div ngbDropdownMenu aria-labelledby="user-dropdown">
+              <h6 class="dropdown-header">
+                <span translate>Logged in as</span> <span class="fw-400">{{ username }}</span>
+              </h6>
+              <!-- <div class="dropdown-divider"></div>
+              <div *ngIf="!isDarkTheme">
+                <button class="dropdown-item" (click)="toggleTheme()" translate>
+                  <img src="../../../assets/dark theme.svg" class="icons" alt="">
+                  Switch to dark Theme</button>
+              </div>
+              <div *ngIf="isDarkTheme">
+                <button class="dropdown-item" (click)="toggleTheme()" translate>
+                  <img src="../../../assets/light-theme.svg" class="icons" alt="">
+                  Switch to light theme</button>
+              </div> -->
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item" (click)="logout()" translate>Logout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="show-side-nav-mobile" [ngClass]="{ 'l-0': isSideNav }">
+  <app-side-nav></app-side-nav>
+</div>

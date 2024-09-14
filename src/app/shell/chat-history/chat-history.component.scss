@@ -1,0 +1,33 @@
+.chat-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: var(--primary);
+  margin-top: 1rem;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 4px;
+}
+.side-nav {
+  width: fit-content;
+  li {
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &.active {
+      // background-color: blueviolet;
+      border: 1px solid var(--secondary) !important;
+    }
+  }
+}
+
+@media (max-width: 990px) {
+  .side-nav {
+    width: 200px;
+  }
+}

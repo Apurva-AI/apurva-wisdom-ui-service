@@ -1,0 +1,48 @@
+<div class="response-wrapper border-2p">
+  <app-answer
+    (answerEvent)="addAnswer($event)"
+    [resAnswer]="resAnswer"
+    [isLanguageMismatch]="isLanguageMismatch"
+    [translationError]="translationError"
+    [detectedLanguageCode]="detectedLanguageCode"
+    [quesToken]="quesToken"
+    (isAnswerLoaded)="onAnswerLoaded()"
+  ></app-answer>
+  <ng-container *ngIf="responseLoaded">
+    <app-results
+      *ngIf="isResultDataLoaded"
+      [resResultArr]="resResultArrParent"
+      [answerLinks]="answerLinks"
+      [resOrgId]="resOrgId"
+      (checkedIDsChange)="updateCheckedIDs($event)"
+      (enhanceToggleEvent)="enhanceToggleFunction()"
+      [viewResults]="viewResults"
+      [viewEnhance]="viewEnhance"
+      [resToken]="resToken"
+    ></app-results>
+    <ng-container *ngIf="resultsAvailable">
+      <app-enhance
+        [enhanceToggle]="enhanceToggle"
+        [concatenatedIds]="concatenatedIds"
+        [checkedIDs]="checkedIDs"
+        [@fadeInOut]
+        (enhanceEvent)="enhanceCall($event)"
+        [viewResults]="viewResults"
+        [viewEnhance]="viewEnhance"
+        #enhanceRef
+      ></app-enhance>
+    </ng-container>
+    <app-response-footer
+      [isCommonPhrase]="isCommonPhrase"
+      [questionText]="queryQuestion"
+      [querySource]="querySource"
+      [resanswer]="teleAnswer"
+      [data]="data"
+      [responseId]="responseIdParent"
+      [responseFooterVisible]="responseFooterVisible"
+      [feedbackReaction]="feedbackReaction"
+      (reactionEvent)="callevent($event)"
+      [token]="resResultArr"
+    ></app-response-footer>
+  </ng-container>
+</div>

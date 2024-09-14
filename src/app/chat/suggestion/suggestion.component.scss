@@ -1,0 +1,91 @@
+.suggestion-wrapper {
+  max-width: 530px;
+  border-radius: 20px;
+  background-color: var(--primary-dark-bg);
+  max-height: 400px;
+  overflow-y: auto;
+  position: absolute;
+  overflow: auto;
+  // top: -216px;
+  bottom: 90%;
+  // left: calc(50% - 17px);
+  left: calc(50% - 5rem);
+  position: absolute;
+  width: 100%;
+  transform: translateX(-50%);
+  padding: 12px;
+  border: 2px solid #56935e;
+
+  overflow-y: auto;
+  scrollbar-width: thin;
+  /* For Firefox */
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+  /* For Firefox */
+
+  /* Webkit browsers like Chrome, Safari */
+  &::-webkit-scrollbar {
+    width: 6px;
+    /* Very narrow scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 155, 155, 0.5);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  .suggestion-list {
+    .sub-title {
+      color: var(--active);
+      padding-bottom: 8px;
+    }
+    ul {
+      li {
+        padding: 8px 0;
+        color: var(--secondary);
+        list-style-type: none;
+        word-break: break-word;
+        cursor: pointer;
+        &:hover {
+          color: var(--primary);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 770px) {
+  .suggestion-wrapper {
+    left: calc(50%);
+    width: 100%;
+  }
+}
+
+@media (max-width: 1324px) {
+  .suggestion-wrapper {
+    max-width: 450px;
+  }
+}
+
+@media (max-width: 1124px) {
+  .suggestion-wrapper {
+    max-width: 400px;
+  }
+}
+
+@media (max-height: 768px) {
+  .suggestion-wrapper {
+    max-height: 300px;
+  }
+}

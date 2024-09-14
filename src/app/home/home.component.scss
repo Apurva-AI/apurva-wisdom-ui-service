@@ -1,0 +1,32 @@
+.logo {
+  width: 100px;
+}
+
+q {
+  font-style: italic;
+  font-size: 1.2rem;
+  quotes: "« " " »";
+}
+
+.accessDiv {
+  height: calc(100vh - 133px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accessText {
+  color: var(--active);
+}
+
+.h-full-chat {
+  height: 100%;
+  display: block;
+}
+
+@media (max-width: 770px) {
+  .m-flex-col {
+    flex-direction: column;
+    height: 85vh;
+  }
+}

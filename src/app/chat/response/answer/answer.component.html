@@ -1,0 +1,27 @@
+<div class="answer-wrapper">
+  <div class="icon">
+    <img src="assets/icon.png" alt="Icon" />
+  </div>
+  <div class="sub-title">
+    <div *ngIf="questiontext == null">
+      <div *ngIf="!isLanguageMismatch">
+        <img *ngIf="!translationError" src="assets/827.gif" style="width: 50px; display: hide" />
+        <div *ngIf="translationError" class="error-message">
+          {{ translationErrorMessage }}
+        </div>
+      </div>
+    </div>
+    <div *ngIf="questiontext != null">
+      <img *ngIf="!answertext" src="assets/827.gif" style="width: 50px; display: hide" class="icon-dark" />
+      <p [innerHTML]="answertext ? answertext : null" class="typing"></p>
+      <!-- <div *ngIf="links.length > 0 && answerLoaded" class="sources">
+        <h3>Source References</h3>
+        <ul class="source-list sourcesUl">
+          <li *ngFor="let link of links" class="source-item">
+            <a [href]="link.url" target="_blank">Source {{ link.id }}</a>
+          </li>
+        </ul>
+      </div> -->
+    </div>
+  </div>
+</div>

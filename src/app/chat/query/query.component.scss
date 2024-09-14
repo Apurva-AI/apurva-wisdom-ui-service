@@ -1,0 +1,25 @@
+.profile {
+  img {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+  }
+}
+.query-wrapper {
+  .sub-title {
+    font-size: 20px;
+    color: var(--primary);
+    font-weight: var(--primary-font-weight);
+  }
+  .edit {
+    margin-left: 16px;
+  }
+}
+
+@media (max-width: 770px) {
+  .query-wrapper {
+    .sub-title {
+      font-size: 18px;
+    }
+  }
+}

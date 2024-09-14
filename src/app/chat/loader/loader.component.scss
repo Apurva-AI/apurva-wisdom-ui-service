@@ -1,0 +1,46 @@
+.loader-wrapper {
+  background-color: var(--primary-dark-bg);
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 16px;
+  .icon {
+    img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+  }
+  .loader-bar {
+    background-color: var(--secondary-dark-bg);
+    height: 8px;
+    width: 100%;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+  .w-70 {
+    width: 70%;
+  }
+}
+
+.loading-animation {
+  overflow: hidden;
+  background: #d0d0d0;
+}
+
+.loading-animation::before {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  animation: loading 1s infinite;
+  background: linear-gradient(to right, transparent, var(--primary), transparent);
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

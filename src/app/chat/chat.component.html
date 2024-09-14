@@ -1,0 +1,62 @@
+<div class="flex flex-1 m-flex-col">
+  <div class="aside-wrapper">
+    <div class="app-chat-wrapper">
+      <div class="main-wrappper">
+        <ng-container *ngIf="responseArray.length === 0">
+          <div class="questions-container" *ngIf="networkQuestions && networkQuestions.length > 0">
+            <app-network-questions
+              (networkQuestionEvent)="receiveMessage($event)"
+              [networkQuestions]="networkQuestions"
+              (refreshClicked)="onRefreshClicked()"
+              [isSpinning]="isSpinning"
+            ></app-network-questions>
+          </div>
+          <div class="title text-center mobileView" translate>
+            <span class="text-green" translate>Get Started with</span> Apurva.ai
+          </div>
+        </ng-container>
+      </div>
+      <div class="flex space-between flex-columns" [ngStyle]="{ height: responseArray.length > 0 ? '100%' : 'unset' }">
+        <ng-container *ngIf="responseArray.length !== 0">
+          <div class="max-h-chat-wrapper no-scrollbar" #scrollContainer>
+            <div style="margin-bottom: 1rem" *ngFor="let res of responseArray; let i = index">
+              <app-query [queryQuestion]="res.question"></app-query>
+              <app-loader *ngIf="res.question !== null && res.answersVar == null"></app-loader>
+              <app-response
+                [resAnswer]="res.answersVar"
+                [isLanguageMismatch]="isLanguageMismatch"
+                [translationError]="translationError"
+                [resResultArr]="res.resultsVar"
+                [isCommonPhrase]="res.isCommonPhrase"
+                [queryQuestion]="res.question"
+                [querySource]="querySource"
+                [responseId]="res.uuid"
+                [viewResults]="viewResults"
+                [viewEnhance]="viewEnhance"
+                [detectedLanguageCode]="detectedLanguageCode"
+                [quesToken]="quesToken"
+                [resToken]="resToken"
+                [feedbackReaction]="res.reaction"
+                *ngIf="res.question !== null && res.answersVar !== null"
+                (reactionEvent)="storeReaction($event)"
+                (scrollEvent)="scrollEnhance(i)"
+              ></app-response>
+            </div>
+            <a class="loadLink" *ngIf="showLoadMoreButton()" (click)="loadMore()">load more...</a>
+          </div>
+        </ng-container>
+        <div class="footer-wrapper">
+          <app-footer #footerRef (questionEvent)="receiveMessage($event)" [resLength]="responseArray.length"></app-footer>
+        </div>
+        <app-floating-action-menu
+          [viewResults]="viewResults"
+          [viewEnhance]="viewEnhance"
+          [isMobile]="isMobile"
+          [resLength]="responseArray.length"
+          (resultsVisibilityMenu)="toggleResults()"
+          (enhanceVisibilityMenu)="toggleEnhance()"
+        ></app-floating-action-menu>
+      </div>
+    </div>
+  </div>
+</div>

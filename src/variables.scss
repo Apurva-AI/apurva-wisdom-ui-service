@@ -1,0 +1,66 @@
+// _variables.scss
+
+// Define a mixin for theme colors
+@mixin theme-colors($theme-name) {
+  @if $theme-name == "light" {
+    --white: #000;
+    --black: #fff;
+    --primary: #13343b;
+    --secondary: #666666;
+    --secondary-dark-bg: #f3f3ee;
+    --primary-dark-bg: #fcfcf9;
+    --active: #49785eff;
+    --badge-bg: #e0e0e0;
+    --side-nav-bg: #f9f9f9;
+    --svg-dark-grey-filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(28%) contrast(100%);
+    --svg-green-filter: brightness(0)
+      saturate(100%)
+      invert(41%)
+      sepia(23%)
+      saturate(641%)
+      hue-rotate(94deg)
+      brightness(96%)
+      contrast(84%);
+    --svg-lighner: brightness(160%);
+    --border-color: #d9d9d0;
+    --border: 2px;
+    --hover: #d7d7d7;
+    --font-weight: 400;
+    --invert-filter: invert(100%);
+  } @else if $theme-name == "dark" {
+    --white: #fff;
+    --black: #000;
+    --primary: #d9d9d9;
+    --secondary: #919191;
+    --secondary-dark-bg: #3f3e3e;
+    --primary-dark-bg: #252525;
+    --active: #9fffac;
+    --badge-bg: #333232;
+    --side-nav-bg: #181818;
+    --svg-dark-grey-filter: none;
+    --svg-green-filter: none;
+    --svg-lighner: none;
+    --hover: #333333;
+    --font-weight: 300;
+    --border: 1px;
+    --border-color: var(--secondary-dark-bg);
+    --invert-filter: none;
+  }
+}
+
+// Create a theme variable
+$theme: "light" !default;
+
+// Apply the theme
+:root {
+  @include theme-colors($theme);
+}
+
+// Create theme classes
+.light-theme {
+  @include theme-colors("light");
+}
+
+.dark-theme {
+  @include theme-colors("dark");
+}

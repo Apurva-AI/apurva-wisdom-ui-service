@@ -1,0 +1,31 @@
+<div class="floating-menu" *ngIf="resLength > 0 && isMobile">
+  <div class="menu-container" [class.expanded]="isOpen">
+    <ng-container *ngIf="isOpen">
+      <div class="menu-item-wrapper" [@expandMenu]>
+        <span class="menu-item-label green">Strategic Analysis</span>
+        <button class="menu-item" (click)="toggleEnhance()" [class.active]="viewEnhance">
+          <ng-container *ngIf="!viewEnhance">
+            <img src="../../../assets/Enhance.svg" alt="Enhance" class="icon-green" />
+          </ng-container>
+          <ng-container *ngIf="viewEnhance">
+            <img src="../../../assets/Enhance-dark.svg" alt="Enhance" class="invert-icon" />
+          </ng-container>
+        </button>
+      </div>
+      <div class="menu-item-wrapper" [@expandMenu]>
+        <span class="menu-item-label green">Sources</span>
+        <button class="menu-item" (click)="toggleResults()" [class.active]="viewResults">
+          <ng-container *ngIf="!viewResults">
+            <img src="../../../assets/book-marked.svg" alt="Results" class="icon-green" />
+          </ng-container>
+          <ng-container *ngIf="viewResults">
+            <img src="../../../assets/book-marked-dark.svg" alt="Results" class="invert-icon" />
+          </ng-container>
+        </button>
+      </div>
+    </ng-container>
+    <button class="main-button" (click)="toggleMenu()">
+      <i class="fas fa-solid fa-bolt"></i>
+    </button>
+  </div>
+</div>

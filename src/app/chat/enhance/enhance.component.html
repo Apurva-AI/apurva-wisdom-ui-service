@@ -1,0 +1,102 @@
+<ng-container *ngIf="viewEnhance">
+  <div class="enhance-wrapper greenText" style="margin-top: 2rem; padding-bottom: 0; border: none">
+    <div class="flex items-center" style="cursor: pointer; gap: 0.5rem">
+      <div class="icon">
+        <img src="../../../../assets/Enhance.svg" alt="" class="icon-green" />
+      </div>
+      <div class="header-font-mobile">
+        <span translate>Strategic Analysis</span> (<span translate>From</span> {{ checkedIDs.length }}
+        <span translate>resources</span>)
+      </div>
+    </div>
+  </div>
+  <div class="enhance-wrapper">
+    <div>
+      <div *ngFor="let section of ideasArray">
+        <div *ngFor="let item of section.items" class="enahanceDiv">
+          <div
+            style="cursor: pointer; margin-top: 8px"
+            class="desc answer ansDiv"
+            class="link baselineFlex"
+            (click)="showAnswer(item.prompts, item.keyword)"
+            translate
+          >
+            <img src="../../../assets/point.svg" alt="" class="icon-green" />
+            <ng-container translate>{{ item.keyword }}</ng-container>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div>
+        <div style="padding: 5px" class="flex items-center">
+          <input
+            [(ngModel)]="customText"
+            (ngModelChange)="onInputChange(customText)"
+            type="text"
+            class="custom-input"
+            [placeholder]="'Ask question based on selected resources...' | translate"
+          />
+          <button
+            style="border: none"
+            class="btn btn-sm send"
+            id="btn-chat"
+            (click)="showAnswer(customText, customText)"
+            [disabled]="!sendDisabled"
+          >
+            <img *ngIf="sendDisabled" src="../../../assets/sendG.svg" alt="" class="icon-green" />
+            <img *ngIf="!sendDisabled" src="../../../assets/Send.svg" alt="" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 1rem">
+      <hr />
+      <nav *ngIf="enhanceResponsesArr.length > 1">
+        <ul class="pagination">
+          <li class="page-item" (click)="goToPage('first')">&laquo;&laquo;</li>
+          <li class="page-item desktopOnly" (click)="goToPage('prev')">&laquo;</li>
+
+          <ng-container *ngFor="let enhance of enhanceResponsesArr">
+            <li
+              class="page-item"
+              *ngIf="
+                enhance.index === 0 ||
+                enhance.index === enhanceResponsesArr.length - 1 ||
+                (enhance.index >= selectedItem.index - 2 && enhance.index <= selectedItem.index + 2)
+              "
+              [class.active]="enhance.uuid === selectedArr"
+              (click)="goToPage(enhance.uuid)"
+            >
+              <ng-container
+                *ngIf="
+                  enhance.index !== 0 &&
+                    enhance.index !== enhanceResponsesArr.length - 1 &&
+                    (enhance.index === selectedItem.index - 2 || enhance.index === selectedItem.index + 2);
+                  else pageNumber
+                "
+              >
+                ...
+              </ng-container>
+              <ng-template #pageNumber>
+                {{ enhance.index + 1 }}
+              </ng-template>
+            </li>
+          </ng-container>
+
+          <li class="page-item desktopOnly" (click)="goToPage('next')">&raquo;</li>
+          <li class="page-item" (click)="goToPage('last')">&raquo;&raquo;</li>
+        </ul>
+      </nav>
+      <div *ngIf="selectedItem">
+        <div style="display: flex; justify-content: space-between">
+          <h5>{{ selectedItem.keyword }}:</h5>
+        </div>
+        <p [innerHTML]="selectedItem.answer"></p>
+        <div *ngIf="enhanceTranslate && selectedItem.translateEnhance && language !== 'en'">
+          <p [innerHTML]="selectedItem.translatedAnswer"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

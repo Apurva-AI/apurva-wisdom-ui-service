@@ -1,0 +1,324 @@
+/*
+ * Entry point of global application style.
+ * Component-specific style should not go here and be included directly as part of the components.
+ */
+
+// Theme variables, must be included before the libraries to allow overriding defaults
+@import "theme/theme-variables";
+@import "./variables.scss";
+
+// 3rd party libraries
+@import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+
+// Theme customization
+@import "theme/theme";
+
+html {
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--primary-dark-bg);
+  color: var(--primary);
+  font-family: "Poppins";
+  font-weight: var(--font-weight);
+  font-size: 16px;
+}
+
+ol,
+ul {
+  // padding-left: 0;
+}
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+}
+.space-between {
+  justify-content: space-between;
+}
+.items-center {
+  align-items: center;
+}
+.space-end {
+  justify-content: flex-end;
+}
+
+.gap-5 {
+  gap: 20px !important;
+}
+.mr-20 {
+  margin-right: 20px;
+}
+.flex-1 {
+  flex: 1;
+}
+.flex-columns {
+  flex-direction: column;
+}
+
+.side-nav {
+  padding-left: 0;
+}
+
+.aside-wrapper {
+  background-color: var(--secondary-dark-bg);
+  border-radius: 20px;
+  max-height: calc(100vh - 96px);
+  min-height: calc(100vh - 100px);
+  overflow: auto;
+  padding: 12px;
+  width: 100%;
+  overflow: hidden;
+}
+.text-center {
+  text-align: center;
+}
+.title {
+  font-size: 24px;
+  font-weight: 400;
+  .text-green {
+    color: var(--active);
+  }
+}
+
+.sub-title {
+  font-size: 18px;
+  font-weight: 400;
+}
+.desc {
+  font-size: 16px;
+  font-weight: var(--font-weight);
+}
+.desc-small {
+  font-size: 14px;
+  font-weight: var(--font-weight);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+// Don not delete - commented Since it looks odd in header
+//.dropdown-toggle::after {
+//   border: 0;
+//   content: url("../src/assets/arrow-down-circle.svg");
+//   transform: scale(0.75);
+//   vertical-align: top;
+//   margin-left: 0px;
+// }
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-menu.show {
+  background-color: var(--secondary-dark-bg);
+  left: unset;
+  right: 0;
+  .dropdown-header {
+    color: var(--primary);
+    font-size: 16px;
+    font-weight: 300;
+    .fw-400 {
+      font-weight: 400;
+    }
+  }
+  .dropdown-item {
+    color: var(--primary);
+    font-size: 16px;
+    font-weight: 300;
+    &:hover {
+      background-color: var(--badge-bg);
+    }
+  }
+}
+.navbar-nav .dropdown-menu {
+  position: absolute !important;
+}
+
+.modalDiv {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--primary-dark-bg);
+  flex-direction: column;
+  color: var(--primary);
+}
+
+.modal-content {
+  border: none !important;
+}
+
+//////////////////////////////////////
+/// loading animation
+/// /////////////////////////////////
+
+.loading-area {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 300px);
+}
+.loader div {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: animate 1.5s ease-in-out infinite;
+  display: inline-block;
+  margin: 0.5rem;
+}
+.loader div:nth-child(0) {
+  animation-delay: 0s;
+}
+.loader div:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.loader div:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.loader div:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.loader div:nth-child(4) {
+  animation-delay: 0.8s;
+}
+.loader div:nth-child(5) {
+  animation-delay: 1s;
+}
+.loader div:nth-child(6) {
+  animation-delay: 1.2s;
+}
+.loader div:nth-child(7) {
+  animation-delay: 1.4s;
+}
+@keyframes animate {
+  0%,
+  100% {
+    transform: scale(0.2);
+    background-color: #ffffff;
+  }
+  40% {
+    transform: scale(1);
+    background-color: #d9d9d9;
+  }
+  50% {
+    transform: scale(1);
+    background-color: var(--active);
+  }
+}
+
+.link {
+  color: var(--primary);
+  text-decoration: none;
+}
+.link:hover {
+  text-decoration: underline; /* Remove underline on hover */
+  color: var(--active); /* Change text color on hover */
+}
+
+.icons {
+  width: 20px;
+  height: 20px;
+}
+
+.active-var {
+  color: var(--active);
+}
+
+.icon-dark {
+  filter: var(--svg-dark-grey-filter);
+}
+
+.icon-green {
+  filter: var(--svg-green-filter);
+}
+
+.icon-light {
+  filter: var(--svg-lighner);
+}
+
+.border-2p {
+  border: 1px solid var(--border-color) !important;
+}
+
+.colourPrimary {
+  color: var(--primary);
+}
+
+.colourPrimary:hover {
+  color: var(--secondary);
+}
+
+.typingAnchor {
+  color: var(--active) !important;
+}
+
+.block-header {
+  font-weight: 300;
+}
+
+@media (max-width: 770px) {
+  .loading-area {
+    min-height: calc(100vh - 340px);
+  }
+  .aside-wrapper {
+    max-height: calc(100vh - 100px);
+    min-height: calc(100vh - 145px);
+  }
+  .title {
+    font-size: 22px;
+  }
+
+  .sub-title {
+    font-size: 16px;
+  }
+  .desc {
+    font-size: 14px;
+  }
+  .desc-small {
+    font-size: 14px;
+  }
+  .navbar-nav {
+    margin-top: 0.5rem;
+  }
+}
+
+.markL {
+  background: #525151;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .navbar-nav .dropdown-menu {
+    position: static;
+  }
+  .dropdown-menu.show {
+    right: unset;
+    overflow-y: auto;
+    max-height: 200px;
+  }
+  .header-font-mobile {
+    font-size: 1rem;
+    display: flex;
+    font-weight: 600;
+    align-items: center;
+  }
+}

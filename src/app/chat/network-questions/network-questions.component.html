@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="title text-center">
+    <p class="text-green" translate>Trending Questions</p>
+  </div>
+  <div class="quesWrapper">
+    <div *ngFor="let question of limitedQuestions()" class="question-item">
+      <div class="ques-list" (click)="sendNetworkQuestion(question.text)">
+        <div class="question-text" [title]="question.text">
+          <span class="emoji">{{ question.emoji }}</span>
+          <div class="question-text-ellipsis">{{ question.text }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="refresh">
+    <div (click)="onRefreshIconClick()" class="refreshClick" translate>
+      Refresh<i class="fa-solid fa-rotate refresh-icon" [class.fa-spin]="isSpinning"></i>
+    </div>
+  </div>
+</div>

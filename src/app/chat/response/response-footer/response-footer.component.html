@@ -1,0 +1,63 @@
+<div *ngIf="!isCommonPhrase && responseFooterVisible" class="flex items-center response-footer">
+  <div class="share">
+    <button *ngIf="!isLiked" class="btn btn-sm like" (click)="toggleLike()">
+      <img src="../../../../assets/ThumbsUp.svg" alt="" class="icon-green" />
+    </button>
+    <button *ngIf="isLiked" class="btn btn-sm like" (click)="toggleLike()">
+      <img style="height: 32px; width: 32px" src="../../../../assets/LikeFill.svg" alt="" class="icon-green" />
+    </button>
+  </div>
+  <div class="share">
+    <button *ngIf="!isDisliked" class="btn btn-sm like" (click)="toggleDislike()">
+      <img src="../../../../assets/ThumbsDown.svg" alt="" class="icon-green" />
+    </button>
+    <button *ngIf="isDisliked" class="btn btn-sm like" (click)="toggleDislike()">
+      <img src="../../../../assets/dislikeDark.svg" alt="" />
+    </button>
+  </div>
+  <!-- <div class="share">
+    <img src="../../../../assets/Save.svg" alt="" />
+  </div>
+  <div class="share">
+    <img src="../../../../assets/Share.svg" alt="" />
+  </div> -->
+  <ng-template #feedbackModal let-modal>
+    <div class="feedbackModalContainer">
+      <div class="feedbackModal">
+        <div style="display: flex; align-items: center; justify-content: space-between">
+          <p style="margin: 1rem 0 0 1rem; font-size: 16px; font-weight: 300; color: var(--active)">
+            Would you like to provide any comments or suggestions?
+          </p>
+          <div (click)="closeModal(modal)" style="cursor: pointer; margin: 1rem">
+            <img src="../../../../assets/modalCross.svg" alt="" class="icon-dark" />
+          </div>
+        </div>
+        <div class="flex items-center check-result-list" style="flex-direction: column; padding: 1rem">
+          <textarea
+            class="form-control textArea"
+            rows="3"
+            [(ngModel)]="feedbackText"
+            placeholder="Enter your feedback"
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="button-close"
+            (click)="closeModal(modal)"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="button-submit"
+            [disabled]="!feedbackText.trim()"
+            (click)="submitFeedback(modal, react)"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,14 @@
+<div *ngIf="uniqueSessions">
+  <div translate class="chat-title">Previous 7 days</div>
+  <ul class="side-nav">
+    <li
+      *ngFor="let session of uniqueSessions"
+      class="flex active gap-1 border-2p"
+      [ngClass]="{ active: session.session_id === selectedSessionId }"
+      style="font-size: 14px; cursor: pointer"
+      (click)="selectSession(session.session_id)"
+    >
+      <div [routerLink]="['/chat', session.session_id]">{{ session.question_text | slice : 0 : 20 }}...</div>
+    </li>
+  </ul>
+</div>

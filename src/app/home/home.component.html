@@ -1,0 +1,8 @@
+<div class="flex flex-1 m-flex-col" *ngIf="UserAcess">
+  <div class="aside-wrapper border-2p">
+    <app-chat class="h-full-chat"> </app-chat>
+  </div>
+</div>
+<div class="flex flex-1 m-flex-col accessDiv" *ngIf="!UserAcess">
+  <h1 class="accessText">You don't have access to this site.<br />Please reach out to your admin.</h1>
+</div>

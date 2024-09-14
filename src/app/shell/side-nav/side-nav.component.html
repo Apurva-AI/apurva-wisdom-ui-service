@@ -1,0 +1,91 @@
+<div [ngClass]="{ 'mr-20': isHidden }">
+  <div class="side-nav-collapse" (click)="hide()" [ngClass]="{ active: isHidden }">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path d="M9 3V21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </div>
+  <div class="side-nav-wd">
+    <ul class="side-nav">
+      <li [ngClass]="{ 'add-side-nav-mar': isHidden }" class="flex active gap-1 border-2p">
+        <img class="icon" src="../../../assets/thread.svg" alt="" class="icon-dark" />
+        <div (click)="reloadPage()" *ngIf="isHidden" translate>Start new thread</div>
+      </li>
+      <!-- <li [ngClass]="{ 'add-side-nav-mar': isHidden }" class="flex">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12.1198 12.78C12.0401 12.77 11.9595 12.77 11.8798 12.78C11.0317 12.7514 10.228 12.3944 9.63831 11.7842C9.04866 11.174 8.71929 10.3585 8.71977 9.50999C8.71977 7.69999 10.1798 6.22999 11.9998 6.22999C12.8592 6.22849 13.6848 6.5648 14.2986 7.16639C14.9124 7.76798 15.2652 8.58668 15.2809 9.44597C15.2966 10.3053 14.9741 11.1363 14.3827 11.76C13.7914 12.3837 12.9787 12.75 12.1198 12.78ZM18.7398 19.38C16.902 21.0691 14.4958 22.0044 11.9998 22C9.39977 22 7.03977 21.01 5.25977 19.38C5.35977 18.44 5.95977 17.52 7.02977 16.8C9.76977 14.98 14.2498 14.98 16.9698 16.8C18.0398 17.52 18.6398 18.44 18.7398 19.38Z"
+            stroke="#D9D9D9"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22Z"
+            stroke="#D9D9D9"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <div *ngIf="isHidden">Admin</div>
+      </li>
+      <li [ngClass]="{ 'add-side-nav-mar': isHidden }" class="flex">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+            stroke="#D9D9D9"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <div *ngIf="isHidden">Past threads</div>
+      </li> -->
+      <!-- <li [ngClass]="{ 'add-side-nav-mar': isHidden }" class="flex">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M9.08984 9.00002C9.32495 8.33169 9.789 7.76813 10.3998 7.40915C11.0106 7.05018 11.7287 6.91896 12.427 7.03873C13.1253 7.15851 13.7587 7.52154 14.2149 8.06355C14.6712 8.60555 14.9209 9.29154 14.9198 10C14.9198 12 11.9198 13 11.9198 13"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path d="M12 17H12.01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div *ngIf="isHidden" translate>Help</div>
+      </li> -->
+    </ul>
+
+    <div *ngIf="isHidden">
+      <app-chat-history></app-chat-history>
+    </div>
+    <div *ngIf="!isHidden" class="flex">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M9.08984 9.00002C9.32495 8.33169 9.789 7.76813 10.3998 7.40915C11.0106 7.05018 11.7287 6.91896 12.427 7.03873C13.1253 7.15851 13.7587 7.52154 14.2149 8.06355C14.6712 8.60555 14.9209 9.29154 14.9198 10C14.9198 12 11.9198 13 11.9198 13"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path d="M12 17H12.01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+  </div>
+</div>
